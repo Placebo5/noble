@@ -1,0 +1,41 @@
+.box{
+	margin: auto;
+	display: block;
+	width: max-content;
+	min-height: 50vh;
+}
+h2#joinmb{
+	text-align: center;
+}
+.joinmember{
+	margin: 50px auto;
+	overflow: hidden;
+}
+.person{
+	float: left;
+    width: 400px;
+    height: 200px;
+    border: 3px solid skyblue;
+    text-align: center;
+    font-size: 14pt;
+    margin-right: 10px;
+    }
+.company{
+	float: left;
+    width: 400px;
+    height: 200px;
+    border: 3px solid skyblue;
+    text-align: center;
+    font-size: 14pt;
+    }
+a#joinperson:link, a#joinperson:visited, a#joincompany:link, a#joincompany:visited {
+    background-color: skyblue;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+a#joinperson:hover, a#joinperson:active, a#joincompany:hover, a#joincompany:active {
+    background-color: #bee5f4;
+}

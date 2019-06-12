@@ -1,0 +1,87 @@
+.box{
+	width:900px;
+	display: table;
+	margin: auto;
+}
+.middle_box{
+	overflow :hidden;
+}
+#calendar{
+	width: 480px;
+	height:405px;
+	float:left;
+	padding : 5px;
+	border: 1px solid gray;
+}
+.time_select{
+		float: right; 
+	overflow : auto;
+	width:400px;
+	height:405px;
+	padding : 5px 3%;
+	border: 1px solid gray;
+}
+.addition{
+	margin-top:10px;
+	float:left;
+	overflow:hidden;
+	width:480px;
+	height:109px;
+	border: 1px solid gray;
+	padding : 5px;
+}
+.info{
+	margin-top:10px;
+	float:right;
+	width:400px;
+	height:109px;
+	border: 1px solid gray;
+	padding : 5px;
+}
+
+.item button{ 
+	text-decoration: none;  
+	display:block; 
+	background-color: #ccddff; 
+	border: 1px solid #ccddff; 
+	border-radius: 8px; 
+	color: black; 
+	padding: 5px; 
+	font-size: 15px;
+	width:88px;
+	cursor:pointer;
+} 
+.time_title{ 
+	display:block;
+	text-align:center;
+	font-weight: bold;
+	font-size: 18px;
+	padding: 10px;
+} 
+.lst_time{ 
+	display:block;
+	text-align:center;
+} 
+.lst_time li{ 
+	display: inline-block;  
+	padding: 5px 30px;
+	float: left;  	
+} 
+
+.insres{
+	padding-top: 15px;	
+	clear: both;
+	text-align:right;
+}
+
+.insres button {
+	padding: 5px;
+	background: skyblue;
+	border: 1px solid skyblue;
+	border-radius: 6px;
+	color: white;
+}
+.notBtn {
+	background-color: gray; 
+	border: 1px solid gray; 
+}

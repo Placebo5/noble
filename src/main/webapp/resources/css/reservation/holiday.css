@@ -1,0 +1,17 @@
+.box{
+	display: table;
+		margin: auto;
+		min-height:calc(65vh); 
+		width : 898px;
+		}
+#calendar{
+	width: 480px;
+	height:410px;
+	float:left;
+	padding : 5px;
+	border: 1px solid gray;
+		}
+.tablebox{
+ 	float: left; 
+	padding-left:10px;	
+}		

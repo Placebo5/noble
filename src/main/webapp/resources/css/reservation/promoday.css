@@ -1,0 +1,40 @@
+.add{
+ 		display: flex;
+ 		margin: 10px;
+ 	}
+ 	.add > * {
+ 		margin: 3px;
+ 		font-size: 15px;
+ 		text-decoration: none;
+ 		height: 30px;
+   	 	width: 80px;
+ 	}
+ 	.add button{
+	 		background: #009999;
+			border: 1px solid #009999;
+	 		border-radius: 6px;
+ 			padding:5px;
+	 		color: white;
+ 			text-decoration: none; 
+	 		
+ 	}
+ 	.add button:hover{
+	 		color: white;
+ 	}
+ 	table th{
+ 		border-top: 1px solid black; 
+ 		border-bottom: 1px solid black; 
+ 		height: 35px;
+ 	}
+ 	table td{
+  		border-bottom: 1px solid gray; 
+ 		list-style-type: none;
+ 		height: 35px;
+ 	}
+ 	table td a{
+ 		text-decoration: none; 
+ 		color :black;
+ 	}
+ 	tr.trselect{
+ 		text-align: center;
+ 	}

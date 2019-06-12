@@ -1,0 +1,49 @@
+@charset "EUC-KR";
+  	.main{  
+  		width : 930px;
+  		display: block;
+   		margin: auto; 
+ 		min-height:calc(80vh); 
+ 	} 	 
+	.Searchbox{
+		float:right;
+		padding-bottom: 3px;
+		display: flex;
+	}
+ 	.Search{ 
+		border: 1px solid gray;
+		background-color : gray;
+		border-radius: 8px;
+		color:white;
+ 		list-style-type: none;
+ 		text-decoration: none; 
+	}
+	.Search:hover{
+		color:black;
+	}
+  	.writeBtn{ 
+  		float:right; 
+  		padding:5px; 
+  		border: 1px solid skyblue; 
+		background-color : skyblue; 
+ 		border-radius: 6px; 
+  		color:white; 
+ 		list-style-type: none; 
+ 		text-decoration: none;  
+  	} 
+ 	.Searchbox > button{
+			border: 1px solid skyblue;
+	 		background-color : skyblue;
+	 		border-radius: 6px;
+	 		color:white;
+	 		cursor:pointer;
+	 		padding:3px;
+	 		font-size: 15px;
+		}
+ 	
+ 	.writeBtn:hover{
+ 		color:black;
+ 	}
+ 	.listtable{
+ 		border-collapse: collapse;
+ 	}

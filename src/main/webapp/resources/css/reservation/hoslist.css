@@ -1,0 +1,61 @@
+	.main{ 
+		width:1000px;	
+  		display: block;
+   		margin: auto; 
+		min-height:calc(80vh);  
+ 	} 	
+ 	.title_nm{
+ 		font-size: 24px;
+ 		font-weight: bold;
+ 	}
+ 	.list{
+ 		border-collapse: collapse;
+ 	}
+ 	table th{
+ 		border-top: 1px solid black;
+ 		border-bottom: 1px solid black;
+ 	}
+ 	table td{
+ 		border-bottom: 1px solid gray;
+ 		list-style-type: none;
+ 	}
+ 	table td a{
+ 		text-decoration: none; 
+ 		color :black;
+ 	}
+ 	.add{
+ 		display: flex;
+ 		margin: 10px;
+ 	}
+ 	.add > * {
+ 		margin: 3px;
+ 		font-size: 15px;
+ 		text-decoration: none;
+ 	}
+ 	.add reservBtn, .proSearch{
+	 		background: skyblue;
+			border: 1px solid skyblue;
+	 		border-radius: 6px;
+ 			padding:5px;
+	 		color: white;
+ 			text-decoration: none;    
+ 	}
+ 	.add reservBtn:hover, .proSearch:hover{
+	 		color: white;
+	 		
+ 	}
+ 	.reservBtn, .proSearch{
+ 			background: skyblue;
+			border: 1px solid skyblue;
+	 		border-radius: 6px;
+ 			padding:5px;
+ 			margin:3px;
+	 		color: white;
+	 		float: right;
+    		margin-right: 20px;
+    		 font-size: 12pt;
+ 	}
+ 	.reservBtn:hover, .proSearch:hover{
+	 		color: white;
+	 		
+ 	}

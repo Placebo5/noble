@@ -1,0 +1,22 @@
+.total{
+	display: flex;
+}
+.write{
+	min-height:calc(65vh);
+	display: table;
+	margin: auto;
+}
+.button{
+	float:right;
+	padding:5px;
+	border: 1px solid skyblue;
+	background-color : skyblue;
+	border-radius: 8px;
+	color:white;
+	list-style-type: none;
+	text-decoration: none; 
+	font-size: 18px;
+}
+.button:hover{
+	color:black;
+}

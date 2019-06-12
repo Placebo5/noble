@@ -1,0 +1,88 @@
+a{
+	text-decoration: none;
+}
+	a:link { 
+    color: black; 
+    background-color: transparent;  	
+    } 
+	a:visited { 
+    color: black; 
+    background-color: transparent; 
+	} 
+	a:hover { 
+    color: black; 
+    background-color: transparent;
+ 	} 
+a:active { 
+   color: black; 
+    background-color: transparent; 
+	} 
+a.sectionmore:link {
+    color: #1a1a1a;	
+}
+a.sectionmore:visited {
+    color: #1a1a1a;
+}
+a.sectionmore:hover {
+    color: #1a1a1a;
+}
+a.sectionmore:active {
+    color: #1a1a1a;
+}
+dl, dd, ul, li {
+   list-style: none;
+}
+.image{
+	background-position: center;
+	margin: auto;
+  	 	display: table;
+}
+.more{
+	float: right;
+	margin-top: -29px;
+	color: #999;
+	font-size: 11px;
+}
+.mainhadan{
+	display:table;
+	margin: 0 auto;
+	height: 180px;
+}
+.mainleft{
+	width: 480px;
+	float: left;
+	padding: 20px;
+}
+.maincenter{
+	width: 480px;
+	float: left;
+	padding: 20px;
+}
+.todaypoto{
+	padding: 10px;
+	display: flex;
+}
+.potobox{
+	padding: 10px;
+}
+.mainright{
+	width: 480px;
+	float: left;
+	padding: 20px;
+}
+.ptalk li dl dt{
+	float: left;
+    width: 250px;
+    padding-bottom: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.ptalk li{
+	padding: 18px 0 12px;
+    border-top: 1px solid #ddd;
+}
+.ptalk li.fixptalk{
+  	height: 59px;
+  	padding: 16px 0 14px;
+}

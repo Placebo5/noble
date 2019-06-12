@@ -1,0 +1,36 @@
+.detailbox{
+	min-width: calc(100vh);
+ 	display: table;
+  	margin: auto;
+  	min-height:calc(65vh);
+}
+.box{
+	float: right;
+}
+#modifypoto,#delpoto{
+	padding:5px;
+	border: 1px solid skyblue;
+	background-color : skyblue;
+	border-radius: 6px;
+	color:white;
+	list-style-type: none;
+	text-decoration: none; 
+}
+#modifypoto:hover,#delpoto:hover,#commbtn:hover {
+	color:black;
+}
+.tablebox{
+	border-collapse: collapse;
+	border-bottom: 1px solid gray;
+}
+#commbtn{
+	padding:5px;
+	color : white; 
+	border: 1px solid skyblue;
+	background-color : skyblue;
+	border-radius: 6px;
+	font-weight : bold; 
+	font-size : 20px; 
+	list-style-type: none; 
+	text-decoration: none;  
+}

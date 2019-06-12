@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="communityMapper">
+
+	<sql id="communityWhere">
+		<where>
+			<if test="hidSearchType != null and hidSearchType == 'title'">
+            	AND c.comm_title LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'contents'">
+            	AND c.comm_contents LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'write'">
+            	AND u.user_id LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+			<if test="hidSearchType != null and hidSearchType == 'tc'">
+            	AND (c.comm_title LIKE CONCAT('%', #{hidSearchWord}, '%')  OR c.comm_contents LIKE CONCAT('%', #{hidSearchWord}, '%'))
+            </if>
+		</where>
+	</sql>
+<!--          	<include refid="communityWhere" />           -->
+	
+	<select id="mainfreelist" resultType="com.noble.vo.CommVO">
+		SELECT
+			comm_no, user_no, comm_title, comm_date
+		FROM
+			community
+		WHERE
+			comm_type = 2
+		ORDER BY
+			comm_no DESC
+		LIMIT 4
+	</select>
+	
+	<select id="mainpotolist" resultType="com.noble.vo.CommVO">
+		SELECT
+			comm_no, user_no, comm_title, comm_date, fileat
+		FROM
+			community
+		WHERE
+			comm_type = 1
+		ORDER BY
+			comm_no DESC
+		LIMIT 3
+	</select>
+	
+	<insert id="insertWrite" parameterType="com.noble.vo.UserselVO">
+		INSERT INTO 
+		COMMUNITY
+			(user_no, comm_type, comm_title, comm_contents, comm_like, comm_view, comm_date) 
+		VALUES 
+			(#{user_no}, 2, #{comm_title}, #{comm_contents}, 0, 0, NOW())				
+	</insert>
+	 
+	<select id="selectFreeList" parameterType="java.util.HashMap" resultType="com.noble.vo.CommVO">
+		SELECT
+			comm_type, comm_no, u.user_no, comm_title, comm_contents, comm_date, comm_like, comm_view, fileat, user_id
+		FROM
+			community c, usersel u
+        WHERE
+        	u.user_no = c.user_no AND comm_type = 2
+        	<if test="hidSearchType != null and hidSearchType == 'title'">
+            	AND c.comm_title LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'contents'">
+            	AND c.comm_contents LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'write'">
+            	AND u.user_id LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+			<if test="hidSearchType != null and hidSearchType == 'tc'">
+            	AND (c.comm_title LIKE CONCAT('%', #{hidSearchWord}, '%')  OR c.comm_contents LIKE CONCAT('%', #{hidSearchWord}, '%'))
+            </if>
+        ORDER BY
+			comm_no DESC
+       	LIMIT #{beginRNum}, #{endRNum} 
+	</select>
+	
+	<select id="selectFreeListCnt" parameterType="java.util.HashMap" resultType="int">
+		SELECT 
+			count(comm_no)totalCnt, c.comm_type, c.comm_no, c.user_no, c.comm_title, c.comm_contents, c.comm_date
+			, c.comm_like, c.comm_view, c.fileat, u.user_id
+		FROM 
+			community c, usersel u 
+ 		WHERE
+         	u.user_no = c.user_no AND comm_type = 2
+         	<if test="hidSearchType != null and hidSearchType == 'title'">
+            	AND c.comm_title LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'contents'">
+            	AND c.comm_contents LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'write'">
+            	AND u.user_id LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+			<if test="hidSearchType != null and hidSearchType == 'tc'">
+            	AND (c.comm_title LIKE CONCAT('%', #{hidSearchWord}, '%')  OR c.comm_contents LIKE CONCAT('%', #{hidSearchWord}, '%'))
+            </if>
+	</select>
+	
+	<select id="selectfreetoplist" parameterType="java.util.HashMap" resultType="com.noble.vo.CommVO">
+		SELECT 
+			comm_no,u.user_no,comm_title,comm_like,comm_view,user_id,comm_date
+   		FROM 
+   		 	community c,usersel u
+    	WHERE
+    		comm_type = 2
+			AND c.user_no = u.user_no
+			AND comm_date >= date_add(now(), interval -7 day)
+		ORDER BY 
+			comm_like DESC
+		LIMIT 4
+	</select>
+	
+	<select id="selectFreeDetail" parameterType="com.noble.vo.CommVO" resultType="com.noble.vo.CommVO">
+		SELECT 
+			comm_type, comm_no, u.user_no, comm_title, comm_contents, comm_date
+			, comm_like, comm_view, fileat, u.user_id
+		FROM 
+			community c, usersel u
+		WHERE 
+			u.user_no = c.user_no AND comm_no = #{comm_no}
+	</select>
+	
+	<update id="updateFreeViewCnt" parameterType="com.noble.vo.CommVO">
+		UPDATE 
+			community set comm_view = comm_view+1
+		WHERE
+			comm_no = #{comm_no}
+	</update>	
+	
+	<update id="updateFreeLikeCnt" parameterType="com.noble.vo.CommVO">
+		UPDATE 
+			community set comm_like = comm_like+1
+		WHERE 
+			comm_no = #{comm_no}
+	</update>
+	
+	<select id="selectFreeLikeCnt" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT 
+			comm_like 
+		FROM 
+			community
+		WHERE
+			comm_no = #{comm_no}
+	</select>
+	
+	<delete id="deleteFree" parameterType="com.noble.vo.CommVO">
+		DELETE 
+			FROM community 
+		WHERE 
+			comm_no = #{comm_no}
+	</delete>
+	
+	<update id="modifyFree" parameterType="com.noble.vo.CommVO">
+		UPDATE 
+			community set comm_title = #{comm_title}
+			, comm_contents = #{comm_contents}
+		WHERE 
+			comm_no = #{comm_no}
+	</update>
+	
+	<insert id="insfreecomm" parameterType="com.noble.vo.CommentsVO"
+			useGeneratedKeys="true" keyProperty="come_no">
+		INSERT INTO comments (comm_no, user_no, come_contents, come_date)
+		VALUES (#{comm_no}, #{user_no}, #{come_contents}, now())
+	</insert>
+	
+	<select id="selectfreecommDetail" parameterType="com.noble.vo.CommentsVO" resultType="com.noble.vo.CommentsVO">
+		SELECT
+			comm_no, u.user_no, come_no, come_contents, come_date, u.user_id
+		FROM
+			comments c, usersel u
+		WHERE
+			 c.come_no=#{come_no} AND u.user_no = c.user_no
+	</select>
+	<select id="selectfreecommList" parameterType="com.noble.vo.CommVO" resultType="com.noble.vo.CommentsVO">
+		SELECT 
+			comm_no, u.user_no, come_no, come_contents, come_date, user_id
+		FROM 
+			comments c, usersel u
+		WHERE 
+			comm_no = #{comm_no} AND c.user_no = u.user_no
+		ORDER BY come_no				
+	</select>
+	
+	<insert id="insertpotoWrite" parameterType="com.noble.vo.CommVO"
+				useGeneratedKeys="true" keyProperty="comm_no">
+		INSERT INTO COMMUNITY (user_no, comm_type, comm_title, comm_contents, comm_like, comm_view
+		<if test="fileat != null and fileat !=''">
+			, fileat
+		</if>
+			, comm_date) 
+		VALUES(#{user_no}, 1, #{comm_title}, #{comm_contents}, 0, 0
+		<if test="fileat !=null and fileat !=''">
+			, #{fileat}
+		</if>
+			,NOW())				
+	</insert>
+	
+	<update id="upInspotoWrite" parameterType="com.noble.vo.CommVO">
+		UPDATE COMMUNITY
+			SET comm_contents = replace(#{comm_contents}, '/tmp/', CONCAT('/', #{comm_no}, '/')) 
+			<if test="fileat != null and fileat !=''">
+				, fileat = #{fileat}
+			</if>
+		WHERE comm_no = #{comm_no}
+	</update>
+		
+	<select id="selectpotolist" parameterType="java.util.HashMap" resultType="com.noble.vo.CommVO">
+		SELECT
+			comm_no, c.user_no, comm_title, comm_date, comm_like, comm_view, user_id, fileat
+		FROM
+			community c,usersel u
+		WHERE
+			comm_type=1 AND c.user_no = u.user_no
+			<if test="hidSearchType != null and hidSearchType == 'title'">
+            	AND c.comm_title LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'contents'">
+            	AND c.comm_contents LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'write'">
+            	AND u.user_id LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+			<if test="hidSearchType != null and hidSearchType == 'tc'">
+            	AND (c.comm_title LIKE CONCAT('%', #{hidSearchWord}, '%')  OR c.comm_contents LIKE CONCAT('%', #{hidSearchWord}, '%'))
+            </if>
+		ORDER BY comm_no DESC
+		LIMIT #{beginRNum}, #{endRNum} 
+	</select>
+	
+	<select id="selectpototoplist" parameterType="java.util.HashMap" resultType="com.noble.vo.CommVO">
+		SELECT 
+			comm_no,c.user_no,comm_title,comm_like,comm_view,user_id,comm_date,fileat
+   		FROM 
+   		 	community c,usersel u
+    	WHERE
+    		comm_type = 1
+			AND c.user_no = u.user_no
+			AND comm_date >= date_add(now(), interval -7 day)
+		ORDER BY 
+			comm_like DESC
+	    LIMIT 4
+	</select>
+	
+	<select id="selectpotoListCnt" parameterType="java.util.HashMap" resultType="int">
+		SELECT 
+			count(comm_no)totalCnt
+		FROM 
+			community c, usersel u 
+ 		WHERE
+         	u.user_no = c.user_no AND comm_type = 1
+         	<if test="hidSearchType != null and hidSearchType == 'title'">
+            	AND c.comm_title LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'contents'">
+            	AND c.comm_contents LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'write'">
+            	AND u.user_id LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+			<if test="hidSearchType != null and hidSearchType == 'tc'">
+            	AND (c.comm_title LIKE CONCAT('%', #{hidSearchWord}, '%')  OR c.comm_contents LIKE CONCAT('%', #{hidSearchWord}, '%'))
+            </if>
+	</select>
+	
+	<update id="modifypoto" parameterType="com.noble.vo.CommVO">
+		UPDATE COMMUNITY
+			SET comm_title = #{comm_title}, comm_contents = replace(#{comm_contents}, '/tmp/', CONCAT('/', #{comm_no}, '/')) 
+			<if test="fileat != null and fileat !=''">
+				, fileat = #{fileat}
+			</if>
+		WHERE 
+			comm_no = #{comm_no}
+	</update>
+</mapper>

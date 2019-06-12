@@ -1,0 +1,24 @@
+.total{
+	box-sizing: border-box;
+	min-height:calc(65vh);
+   	margin: 0 auto; 
+}
+.writebox{
+	display:table;
+   	margin: 0 auto; 	 
+}
+.modiBtn{
+	text-align:right;
+}
+	
+.modiBtn button {
+	padding: 5px;
+	background: skyblue;
+	border: 1px solid skyblue;
+	border-radius: 6px;
+	color: white;
+	font-size: 18px;
+}
+.modiBtn:hover{
+	color:black;
+}

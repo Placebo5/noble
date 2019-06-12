@@ -1,0 +1,77 @@
+.mainbox{
+		min-height:calc(80%);
+		display: table;
+ 		margin: auto; 
+ 		min-widht:866px;
+	}
+	.companyinfo{
+		overflow: hidden; 
+ 		padding: 30px; 
+		border: 3px solid lightgray; 
+	}
+	.companyname1{
+		border: 1px solid lightgray;
+	    width: 400px;
+	    height: 250px;
+	    margin: auto;
+	    /* display: block; */
+	    display: inline-block;
+	    float: left;
+	}
+	.companyname2{
+		border: 1px solid lightgray;
+	    width: 400px;
+	    height: 250px;
+	    margin: auto;
+	    /* display: block; */
+	    display: inline-block;
+	    float: left;
+	}
+	.companyname3{
+		border: 1px solid lightgray;
+	    width: 400px;
+	    height: 250px;
+	    margin: auto;
+	    /* display: block; */
+	    display: inline-block;
+	    float: left;
+	    text-align: center;
+	}
+	.companyname4{
+		border: 1px solid lightgray;
+	    width: 400px;
+	    height: 250px;
+	    margin: auto;
+	    /* display: block; */
+	    display: inline-block;
+	    float: left;
+	}
+	.companydetail{
+		border: 1px solid lightgray;
+		width: 400px;
+		height: 150px;
+		margin: auto;
+	}
+	.li1, .li2, .li3, .li4{
+		list-style-type: none;
+	}
+	.hosbtn{
+		margin:auto;
+		padding: 10px; 
+		text-align: right;	   
+		
+	}
+ 	.modifypromo, .delpromo, .hosderewrite {
+ 		text-align: right;
+ 		background: skyblue;
+		border: 1px solid #bee5f4;
+ 		border-radius: 6px;
+		padding:5px;
+		margin:5px;
+ 		color: white;
+ 		text-decoration: none;
+  	}
+ 	.modifypromo:hover, .delpromo:hover, .hosderewrite:hover{
+	 	color: white;
+	 	background-color: #bee5f4;
+ 	}   

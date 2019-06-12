@@ -1,0 +1,33 @@
+.box{
+	width: 940px;
+ 	display: block;
+  	margin: auto; 
+	min-height:calc(100vh);
+}
+.hide{   
+	display: none;   
+}   
+.block .hide{   
+	display: table-row;   
+}   
+.table{
+	border: 1px solid gray;
+	table-layout: fixed;
+	border-collapse: collapse;
+	margin-bottom:20px;
+}	
+.search{
+	margin-bottom:20px;
+	text-align: right;
+	display: flex;
+	float: right;
+}
+.search > button{
+	border: 1px solid skyblue;
+	background-color : skyblue;
+	border-radius: 6px;
+	color:white;
+	cursor:pointer;
+	padding:3px;
+	font-size: 15px;
+}

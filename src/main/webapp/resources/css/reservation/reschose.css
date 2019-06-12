@@ -1,0 +1,16 @@
+.box{
+		width: 940px;
+  		display: block;
+   		margin: auto; 
+		min-height:calc(60vh);
+	}
+.btnBox a{
+		margin : 10px;
+		border: 1px solid skyblue;
+ 		background-color : skyblue;
+ 		border-radius: 6px;
+ 		color:white;
+ 		cursor:pointer;
+ 		padding:3px;
+ 		font-size: 20px;
+	}

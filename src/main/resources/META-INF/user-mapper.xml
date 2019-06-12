@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userMapper">
+
+	<select id="joinIDChk" parameterType="java.lang.String" resultType="int">
+		SELECT
+			count(*) 
+		FROM
+			usersel 
+		WHERE 
+			user_id=#{user_id}
+	</select>
+	
+	<insert id="insertUser" parameterType="com.noble.vo.UserselVO">
+		INSERT INTO 
+			usersel (mng_yn, user_id, user_pwd, user_nm, user_tel, user_email, comp_yn)
+		VALUES
+			(2, #{user_id}, #{user_pwd}, #{user_nm}, #{user_tel}, #{user_email},'n')			
+	</insert>
+	
+	<insert id="insertUserComp" parameterType="com.noble.vo.UserselVO">
+		INSERT INTO
+			usersel (mng_yn, user_id, user_pwd, user_nm, user_tel, user_email, comp_yn
+					,comp_name, comp_rgnno, comp_ceonm, comp_add)
+		VALUES
+			(3, #{user_id}, #{user_pwd}, #{user_nm}, #{user_tel}, #{user_email},'y'
+				,#{comp_name},#{comp_rgnno},#{comp_ceonm},#{comp_add})			
+	</insert>
+	
+	<select id="loginCheck"
+			parameterType="com.noble.vo.UserselVO" resultType="com.noble.vo.UserselVO">
+		SELECT
+			user_no, user_id, user_pwd, user_nm, user_tel, mng_yn, comp_name, comp_add
+		FROM
+			usersel
+		WHERE
+			user_id=#{user_id} and user_pwd=#{user_pwd}
+	</select>	
+	
+	<select id="MypagePwdCheck" parameterType="com.noble.vo.UserselVO" resultType="com.noble.vo.UserselVO">
+		SELECT
+			mng_yn, user_id, user_pwd, user_nm, user_tel, user_email, comp_yn , comp_name  
+		FROM	
+			usersel where user_id=#{user_id} and user_pwd=#{user_pwd}
+	</select>
+	
+	<update id="updMypageUser" parameterType="com.noble.vo.UserselVO">
+		UPDATE
+			usersel set user_pwd=#{user_pwd}, user_tel=#{user_tel} 
+		WHERE
+			user_id=#{user_id} 
+	</update>
+	
+ 	<!-- 회원탈퇴  --> 
+	<delete id="memberWithrawal" parameterType="com.noble.vo.UserselVO">
+		DELETE FROM usersel 
+			WHERE user_id = #{user_id} 
+	</delete>
+	
+</mapper>

@@ -1,0 +1,47 @@
+h2 {
+    text-align: center;
+}
+.info{
+	margin: auto;
+	width: 550px;
+    height: 350px;
+}
+.info th{
+ 	text-align: left;
+ 	font-size: 12pt;
+ 	padding: 10px;	
+}
+.membermodify{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    
+}
+div.modi{
+	margin: auto;
+    padding: 20px;
+    width: 100px;
+    text-align: center;
+    background-color: skyblue;
+    color: white;
+    border-radius: 7px;
+}
+#updMypage:link, #updMypage:visited {
+    background-color: skyblue;
+    color: white;
+    padding: 15px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14pt;
+     font-weight: bold;
+     width: 40px;
+}
+
+.out{
+	
+	float: right;
+    width: 700px;
+    padding: 0px;
+    margin: -10px;
+}

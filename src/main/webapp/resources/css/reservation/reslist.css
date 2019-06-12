@@ -1,0 +1,22 @@
+.box{
+	width: 940px;
+	display: block;
+	margin: auto; 
+	min-height:calc(100vh);
+}
+.title_nm{
+	font-size: 24px;
+	font-weight: bold;
+}
+.hide{   
+	display: none;   
+}   
+.block .hide{   
+	display: table-row;   
+} 
+.table{
+	border: 1px solid gray;
+	table-layout: fixed;
+	border-collapse: collapse;
+	margin-bottom:20px; 
+}	

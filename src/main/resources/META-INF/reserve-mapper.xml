@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ReserveMapper">
+	
+	<insert id="insreservergs" parameterType="com.noble.vo.ReserveVO">
+		INSERT INTO 
+			reserve(pro_no, user_no, res_date, res_time, res_contents, res_nm, res_tel, res_yn) 
+		VALUES(
+			#{pro_no}, #{user_no}, #{res_date}, #{res_time}, #{res_contents}
+			, #{res_nm}, #{res_tel}, '미확인'	
+			)
+	</insert>
+	
+	<select id="selectResList" parameterType="java.util.HashMap" resultType="com.noble.vo.ReserveVO">
+		SELECT
+			r.pro_no, r.user_no, res_no, res_date, res_time, res_contents, res_nm, res_tel
+			, res_yn, u.user_id, upro.comp_add, upro.comp_name
+		FROM
+			reserve r, usersel u, promotion p,usersel upro
+		WHERE r.user_no = u.user_no AND r.user_no = #{user_no}
+			AND r.pro_no = p.pro_no AND p.user_no = upro.user_no
+		    ORDER BY r.res_no desc
+<!-- 		LIMIT #{beginRNum}, #{endRNum} -->
+	</select>
+	
+	<select id="selectResListCnt" parameterType="java.util.HashMap" resultType="int">
+		SELECT 
+			count(user_no) totalCnt
+		FROM 
+			reserve
+		WHERE 
+			user_no = #{user_no}
+	</select>
+	
+	<select id="selectResListComp" parameterType="java.util.HashMap" resultType="com.noble.vo.ReserveVO">
+		SELECT  
+			r.PRO_NO, r.USER_NO, r.RES_NO, r.RES_DATE, r.RES_TIME, r.RES_CONTENTS
+			, r.RES_NM, r.RES_TEL, r.RES_YN, upro.comp_name, u.user_id, upro.comp_add
+		FROM 
+			reserve r, promotion p, usersel upro, usersel u
+		WHERE 
+				p.pro_no = ${pro_no}
+			AND upro.user_no = ${user_no}
+			AND r.pro_no = p.pro_no 
+			AND p.user_no = upro.user_no AND r.user_no = u.user_no
+          <if test="hidSearchType != null and hidSearchType == 'name'">
+         	AND r.res_nm LIKE CONCAT('%', #{hidSearchWord}, '%') 
+          </if>
+          <if test="hidSearchType != null and hidSearchType == 'add'">
+          	AND upro.comp_name LIKE CONCAT('%', #{hidSearchWord}, '%')
+          </if>
+          <if test="hidSearchType != null and hidSearchType == 'day'">
+          	AND r.res_date LIKE CONCAT('%', #{hidSearchWord}, '%')
+          </if>
+          <if test="hidSearchType != null and hidSearchType == 'chk'">
+          	AND r.res_yn LIKE CONCAT('%', #{hidSearchWord}, '%')
+          </if>
+		ORDER BY r.res_no DESC
+  		LIMIT #{beginRNum}, #{endRNum}
+	</select>
+	
+	<select id="selectResListCompCnt" parameterType="java.util.HashMap" resultType="int">
+		SELECT 
+			count(res_no) totalCnt
+		FROM 
+			reserve r, promotion p, usersel upro, usersel u
+		WHERE 
+				p.pro_no = ${pro_no} 
+			AND upro.user_no = ${user_no}
+			AND r.pro_no = p.pro_no 
+			AND p.user_no = upro.user_no 
+			AND r.user_no = u.user_no
+            <if test="hidSearchType != null and hidSearchType == 'name'">
+           		AND r.res_nm LIKE CONCAT('%', #{hidSearchWord}, '%') 
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'add'">
+            	AND upro.comp_name LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'day'">
+            	AND r.res_date LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'chk'">
+            	AND r.res_yn LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+	</select>
+	
+	<select id="selectResListDayComp" parameterType="com.noble.vo.ReserveVO" resultType="com.noble.vo.ReserveVO">
+			SELECT
+				r.PRO_NO, r.USER_NO, r.RES_NO, r.RES_DATE, r.RES_TIME, r.RES_CONTENTS, r.RES_NM, r.RES_TEL, r.RES_YN
+                , upro.comp_name, u.user_id, upro.comp_add
+            FROM
+            	reserve r, promotion p, usersel upro, usersel u
+            WHERE 
+	            	p.pro_no = #{pro_no}
+	            AND r.res_date = #{res_date}
+	            AND upro.user_no = #{user_no}
+            	AND r.pro_no = p.pro_no
+	            AND p.user_no = upro.user_no
+	            AND r.user_no = u.user_no
+            ORDER BY r.res_no DESC
+	</select>
+
+
+
+	<select id="selectResListMng" parameterType="java.util.HashMap" resultType="com.noble.vo.ReserveVO">
+		SELECT
+			r.pro_no, r.user_no, res_no, res_date, res_time, res_contents, res_nm, res_tel
+			, res_yn, u.user_id, upro.comp_add, upro.comp_name
+		FROM
+			reserve r, usersel u, promotion p,usersel upro
+		WHERE r.user_no = u.user_no AND r.pro_no = p.pro_no AND p.user_no = upro.user_no
+            <if test="hidSearchType != null and hidSearchType == 'name'">
+            	AND r.res_nm LIKE CONCAT('%', #{hidSearchWord}, '%') 
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'add'">
+            	AND upro.comp_name LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'day'">
+            	AND r.res_date LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'chk'">
+            	AND r.res_yn LIKE CONCAT('%', #{hidSearchWord}, '%')
+            </if>
+          	ORDER BY r.res_no desc    
+		LIMIT #{beginRNum}, #{endRNum}		
+	</select>
+	
+	<select id="selectResListMngCnt" parameterType="java.util.HashMap" resultType="int">
+		SELECT 
+			count(res_no) totalCnt
+        FROM 
+        	reserve r, promotion p, usersel upro, usersel u
+        WHERE 
+        	r.pro_no = p.pro_no AND p.user_no = upro.user_no AND r.user_no = u.user_no
+			<if test="hidSearchType != null and hidSearchType == 'name'">
+           		and r.res_nm LIKE CONCAT('%', #{hidSearchWord}, '%') 
+          		</if>
+          		<if test="hidSearchType != null and hidSearchType == 'add'">
+           		and upro.comp_name LIKE CONCAT('%', #{hidSearchWord}, '%') 
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'day'">
+            	and r.res_date LIKE CONCAT('%', #{hidSearchWord}, '%') 
+            </if>
+            <if test="hidSearchType != null and hidSearchType == 'chk'">
+            	and r.res_yn LIKE CONCAT('%', #{hidSearchWord}, '%') 
+            </if>	
+	</select>
+	
+	<insert id="insHoliday">
+		INSERT INTO myholiday (pro_no, holiday_date, holiday_desc) VALUES
+		<foreach collection="list" item="item" separator=",">
+		(#{item.pro_no}, #{item.date_in}, #{item.desc_in})
+		</foreach>
+	</insert>
+	
+	<select id="selectHolidayList" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT 
+			no, pro_no, holiday_date, holiday_desc	
+		FROM 
+			myholiday
+		WHERE 
+			pro_no = #{pro_no}
+	</select>	
+	
+	<select id="selectProTimeList" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT 
+			protime_no, pro_no, week_day, holiday
+		FROM 
+			protime	
+		WHERE 
+			pro_no = #{pro_no} AND holiday = 1
+	</select>
+	
+	<select id="selectproreslist" parameterType="com.noble.vo.ProtimeVO" resultType="com.noble.vo.ProtimeVO">
+		SELECT
+			 protime_no, pro_no, week_day, holiday, pro_unit
+			, replace(start_time,'0','') start_time, replace(end_time,'0','') end_time
+		FROM
+			protime	
+		WHERE
+			pro_no = #{pro_no} and week_day = #{week_day}
+	</select>
+	
+	<select id="selectTimecheck" parameterType="com.noble.vo.ReserveVO" resultType="java.util.HashMap">
+		SELECT 
+			pro_no, res_no, res_date, res_time, res_yn
+		FROM 
+			reserve
+		WHERE 
+			pro_no = #{pro_no} and res_date = #{res_date} 
+		ORDER BY res_date, res_time
+	</select>
+	
+	<update id="updateReserveChk" parameterType="com.noble.vo.ReserveVO">
+		UPDATE 
+			reserve set res_yn = '승인'
+		WHERE
+			res_no = #{res_no}
+	</update>
+		
+	<select id="selectReserveChk" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT
+			res_yn
+		FROM
+			reserve
+		WHERE
+			res_no = #{res_no}
+	</select>
+	
+	<update id="updateReserveCansel" parameterType="com.noble.vo.ReserveVO">
+		UPDATE 
+			reserve set res_yn = '취소'
+		WHERE 
+			res_no = #{res_no}
+	</update>
+	
+	<select id="selectHoliday" parameterType="com.noble.vo.MyholidayVO" resultType="int">
+		SELECT 
+			count(holiday_date)	
+		FROM 
+			myholiday
+		WHERE 
+			pro_no = #{pro_no} AND holiday_date = #{res_date}
+	</select>
+	
+	<select id="selectHosProNO" parameterType="com.noble.vo.PromotionVO" resultType="com.noble.vo.PromotionVO">
+		SELECT 
+			pro_no, pro_type, user_no
+		FROM 
+			promotion
+		WHERE 
+			user_no = #{user_no}
+	</select>
+</mapper>

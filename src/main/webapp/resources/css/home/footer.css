@@ -1,0 +1,6 @@
+.footer{
+		background-color: aliceblue;
+		padding: 20px;
+		margin-top: 10px;
+		min-width: calc(100vh);
+}

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="promotionMapper">
+	
+	<insert id="insertPromotion" parameterType="com.noble.vo.PromotionVO"
+			useGeneratedKeys="true" keyProperty="pro_no">
+		INSERT INTO promotion 
+			(PRO_TYPE,USER_NO,PRO_CONTENTS1,USER_TEL)
+		VALUES
+			(#{pro_type}, #{user_no}, #{pro_contents1}, #{user_tel})
+		
+	</insert>
+	
+	<insert id="insertProtime" parameterType="java.util.HashMap">
+		INSERT INTO protime (PRO_NO, WEEK_DAY, START_TIME, END_TIME, HOLIDAY, PRO_UNIT)
+		VALUES (#{pro_no}, #{week_day}, 	
+			<choose>
+				<when test="holiday != null and holiday == 1">
+					null, null, 1
+				</when>
+				<when test="holiday != null and holiday == 0">
+					#{start_time} , #{end_time} , #{holiday}
+				</when>
+			</choose>
+			, #{pro_unit})
+	</insert>
+	
+	<update id="upInsPromotion" parameterType="com.noble.vo.PromotionVO">
+		UPDATE
+			promotion
+		SET 
+			pro_contents1 = replace(#{pro_contents1}, '/tmp/', CONCAT('/', #{pro_no}, '/')) 
+			<if test="atch_file1_nm != null and atch_file1_nm != ''">
+			, atch_file1_nm = #{atch_file1_nm}
+			</if>
+			<if test="atch_file2_nm != null and atch_file2_nm != ''">
+			, atch_file2_nm = #{atch_file2_nm}
+			</if>
+		WHERE
+			pro_no = #{pro_no}
+	</update>
+	
+	<select id="selectPromotionlist" parameterType="java.util.HashMap" resultType="com.noble.vo.PromotionuserVO">
+	 	SELECT 
+	 		u.user_no, comp_name, comp_add, pro_no, pro_type, pro_contents1, u.user_tel
+		FROM 
+			promotion p, usersel u
+		WHERE 
+			p.user_no = u.user_no
+            <if test="hidProSearchType != null and hidProSearchType == 'mutual'">
+            	AND u.comp_name LIKE CONCAT('%', #{hidProSearchWord}, '%') 
+            </if>
+            <if test="hidProSearchType != null and hidProSearchType == 'classify'">
+            	AND p.pro_type LIKE CONCAT('%', #{hidProSearchWord}, '%')
+            </if>
+             <if test="hidProSearchType != null and hidProSearchType == 'addr'">
+            	AND u.comp_add LIKE CONCAT('%', #{hidProSearchWord}, '%')
+            </if>
+         LIMIT #{beginRNum}, #{endRNum}
+	</select>
+	
+	<select id="selectProListCnt" parameterType="java.util.HashMap" resultType="int">
+		SELECT
+			count(*) totalCnt	
+		FROM 
+			usersel u, promotion p
+        WHERE 
+        	u.user_no = p.user_no
+        	 <if test="hidProSearchType != null and hidProSearchType == 'mutual'">
+            	AND u.comp_name LIKE CONCAT('%', #{hidProSearchWord}, '%') 
+            </if>
+            <if test="hidProSearchType != null and hidProSearchType == 'classify'">
+            	AND p.pro_type LIKE CONCAT('%', #{hidProSearchWord}, '%')
+            </if>
+             <if test="hidProSearchType != null and hidProSearchType == 'addr'">
+            	AND u.comp_add LIKE CONCAT('%', #{hidProSearchWord}, '%')
+            </if>
+	</select>
+		
+	<select id="selectPromotionDetail" parameterType="com.noble.vo.PromotionuserVO" resultType="com.noble.vo.PromotionuserVO">
+		SELECT 
+			u.user_no, comp_name, comp_add, p.user_no, pro_no, pro_type
+			, pro_contents1, u.user_tel, atch_file1_nm, atch_file2_nm
+		FROM  
+			usersel u, promotion p
+		WHERE 
+			u.user_no = p.user_no AND p.pro_no = #{pro_no}
+	</select>
+	
+	<update id="modifyPromotion" parameterType="com.noble.vo.PromotionuserVO">
+		UPDATE 
+			promotion 
+		SET 
+			comp_name = #{comp_name}, pro_type = #{pro_type}, pro_contents1 = #{pro_contents1}
+		WHERE pro_no = #{pro_no}
+	</update>
+	
+	<delete id="deletePromotion" parameterType="com.noble.vo.PromotionVO">
+		DELETE FROM promotion
+		WHERE pro_no = #{pro_no}
+	</delete>
+	
+	<delete id="deleteProtime" parameterType="com.noble.vo.PromotionVO">
+		DELETE FROM protime
+		WHERE pro_no = #{pro_no}
+	</delete>
+	
+</mapper>
